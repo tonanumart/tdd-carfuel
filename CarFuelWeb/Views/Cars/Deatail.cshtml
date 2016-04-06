@@ -1,0 +1,24 @@
+﻿@using CarFuel.Model
+@model Car
+@{
+    ViewBag.Title = "Deatail";
+}
+
+@helper  Message()
+{
+        if (Model.AvgRateFillUp.HasValue)
+        {
+           <span> Avg rate  <p> @Model.AvgRateFillUp.Value.ToString("n2") </p> km / l</span>
+        }
+        else
+        {
+            <span>Cannot calculate ...</span><a href="#">Fill up car</a>
+        }
+}
+<div class="well wellsm">
+    @Model.Make - @Model.Model
+</div>
+<div class="well well-sm">
+     @Message() 
+</div>
+<a href="@Url.Content("~/Cars/Index")" class="btn btn-default">Back</a>

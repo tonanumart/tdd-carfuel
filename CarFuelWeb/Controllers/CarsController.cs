@@ -21,7 +21,7 @@ namespace CarFuelWeb.Controllers
             this.carService = new CarService(new CarDb());
         }
         // GET: Cars
-        
+
         public ActionResult Index()
         {
             var memberId = User.Identity.GetUserId();
@@ -34,6 +34,14 @@ namespace CarFuelWeb.Controllers
             return View();
         }
 
+
+        public ActionResult Deatail(Guid id)
+        {
+            var userId = new Guid(User.Identity.GetUserId());
+            var car = carService.GetCars(userId).SingleOrDefault(x => x.Id == id);
+            return View(car);
+        }
+
         [HttpPost]
         public ActionResult Create(Car car)
         {
@@ -42,7 +50,8 @@ namespace CarFuelWeb.Controllers
             {
                 Car newCar = carService.AddNewCar(memberId, car);
             }
-            catch (OverQuotaException ex) {
+            catch (OverQuotaException ex)
+            {
                 TempData["error"] = ex.Message;
             }
             return RedirectToAction("Index");
