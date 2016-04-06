@@ -33,9 +33,9 @@
         @foreach (var car in Model)
         {
             <tr>
-                <td class="item">@car.Make</td>
-                <td>@car.Model</td>
-                <td>@car.AvgRateFillUp</td>
+                <td class="item">@Html.ActionLink(car.Make , "Deatail", new { id = car.Id})</td>
+                @*<td>@car.Model</td>
+                <td>@car.AvgRateFillUp</td>*@
             </tr>
         }
     </tbody>
