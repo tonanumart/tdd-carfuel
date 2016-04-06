@@ -26,9 +26,9 @@ namespace CarFuel.Service
             this.carDb = CarDb;
         }
 
-        public List<Car> GetCars(Guid guid)
+        public List<Car> GetCars(Guid memeberId)
         {
-            return carDb.GetAll(car => car.OwnerId == guid).ToList();
+            return carDb.GetAll(car => car.OwnerId == memeberId).ToList();
         }
 
         public Car AddNewCar(Guid userId, Car car)

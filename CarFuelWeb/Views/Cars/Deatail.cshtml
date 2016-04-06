@@ -1,0 +1,15 @@
+﻿@using CarFuel.Model
+@model Car
+@{
+    ViewBag.Title = "Deatail";
+}
+
+<div class="well wellsm">
+    @Model.Make - @Model.Model
+</div>
+
+<div class="well well-sm">
+    Avg rate @(Model.AvgRateFillUp?.ToString("n2")) km/l
+</div>
+
+<a href="@Url.Content("~/Cars/Index")" class="btn btn-default">Back</a>
