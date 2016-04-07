@@ -9,6 +9,8 @@ namespace CarFuel.DAL
 {
     public class FakeCarDB : ICarDb
     {
+        public bool IsCalledAdd { get; set; } = false;
+
         public FakeCarDB() {
             cars = new List<Car>();
         }
@@ -18,6 +20,7 @@ namespace CarFuel.DAL
         public Car Add(Car car)
         {
             cars.Add(car);
+            IsCalledAdd = true;
             return car;
         }
 
