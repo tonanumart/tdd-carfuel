@@ -11,6 +11,7 @@ using CarFuel.DAL;
 using System.ComponentModel.DataAnnotations;
 using CarFuel.Service.CustomException;
 using Xunit.Abstractions;
+using Moq;
 
 namespace CarFuelFacts.TestService
 {
@@ -28,7 +29,7 @@ namespace CarFuelFacts.TestService
         {
             this.fakeDB = new FakeCarDB();
             this.carService = new CarService(fakeDB);
-            
+
         }
     }
 
@@ -37,7 +38,7 @@ namespace CarFuelFacts.TestService
     {
 
     }
-    
+
     public class CarServiceFacts
     {
         [Collection(nameof(ConstantTest.CarService))]
@@ -66,12 +67,30 @@ namespace CarFuelFacts.TestService
                 addedCar.ShouldNotBeNull();
                 Assert.Equal(car.Make, addedCar.Make);
                 Assert.Equal(car.Model, addedCar.Model);
-               
+
                 fakeDb.IsCalledAdd.ShouldBeTrue();//Mock Way test Adding
 
                 //var cars = carService.GetCars(userId);
                 //Assert.Equal(1, cars.Count);
                 //Assert.Contains(cars, _car => _car.OwnerId == userId);
+            }
+
+            [Fact]
+            public void AddingSingleCarUsingMoq()
+            {
+                var tempCarDb = carService.carDb;
+
+                var mock = new Mock<ICarDb>();
+                mock.Setup(db => db.Add(It.IsAny<Car>())).Returns<Car>(x=>x);
+                carService.carDb = mock.Object;
+                var car = new Car();
+                var addedCar = carService.AddNewCar(Guid.NewGuid(), car);
+                mock.Verify(db => db.Add(It.IsAny<Car>()), Times.Once);
+                Assert.Equal(car.Make, addedCar.Make);
+                Assert.Equal(car.Model, addedCar.Model);
+
+                carService.carDb = tempCarDb;
+
             }
 
             [Fact]
@@ -116,7 +135,7 @@ namespace CarFuelFacts.TestService
             }
 
             [Fact]
-            
+
             public void GetCarTest_Not_Null()
             {
                 var memebr_alice = Guid.NewGuid();
