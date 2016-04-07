@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CNX.ShareLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace CarFuel.Model
         public FillUp AddFillUp(int odoMeter, int lites)
         {
             var fillUp = new FillUp(odoMeter, lites);
-
+            fillUp.Date = SystemTime.Now();
             var lastFillUp = this.FillUps.SingleOrDefault(item => item.NextFillUp == null);
             //var lastFillUp = this.FillUps.LastOrDefault();
             if (lastFillUp != null)
@@ -33,6 +34,7 @@ namespace CarFuel.Model
                 lastFillUp.NextFillUp = fillUp;
             }
             this.FillUps.Add(fillUp);
+           
             return fillUp;
         }
 

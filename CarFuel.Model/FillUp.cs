@@ -10,6 +10,7 @@ namespace CarFuel.Model
     {
 
         public FillUp() { }
+        
 
         public FillUp(int odoMeter, int lites)
         {
@@ -18,9 +19,10 @@ namespace CarFuel.Model
         }
 
         public int Id { get; set; }
-
+        public DateTime Date { get; set; }
         public decimal Lites { get; set; }
         public int OdoMeter { get; set; }
+
         public decimal? RateKmLite
         {
             get
@@ -33,6 +35,7 @@ namespace CarFuel.Model
 
             }
         }
+
         public FillUp NextFillUp { get; set; }
     }
 }

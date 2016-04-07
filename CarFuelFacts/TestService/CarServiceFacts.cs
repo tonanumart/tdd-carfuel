@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using CarFuel.Service.CustomException;
 using Xunit.Abstractions;
 using Moq;
+using CNX.ShareLib;
 
 namespace CarFuelFacts.TestService
 {
@@ -81,14 +82,13 @@ namespace CarFuelFacts.TestService
                 var tempCarDb = carService.carDb;
 
                 var mock = new Mock<ICarDb>();
-                mock.Setup(db => db.Add(It.IsAny<Car>())).Returns<Car>(x=>x);
+                mock.Setup(db => db.Add(It.IsAny<Car>())).Returns<Car>(x => x);
                 carService.carDb = mock.Object;
                 var car = new Car();
                 var addedCar = carService.AddNewCar(Guid.NewGuid(), car);
                 mock.Verify(db => db.Add(It.IsAny<Car>()), Times.Exactly(1));
                 Assert.Equal(car.Make, addedCar.Make);
                 Assert.Equal(car.Model, addedCar.Model);
-
                 carService.carDb = tempCarDb;
 
             }
@@ -121,6 +121,18 @@ namespace CarFuelFacts.TestService
                 });
                 exception.Message.ShouldEqual("cannot add more car");
             }
+
+            [Fact]
+            public void NewFillUp_HasCurrentDateTime()
+            {
+                var c = new Car();
+                SystemTime.ChangeDateTime(DateTime.Now);
+                FillUp f = c.AddFillUp(1000, 40);
+                f.Date.ShouldEqual(SystemTime.Now());
+                SystemTime.ResetDateTime();
+
+            }
+
         }
 
         [Collection(nameof(ConstantTest.CarService))]
@@ -154,5 +166,6 @@ namespace CarFuelFacts.TestService
 
 
     }
+
 
 }
