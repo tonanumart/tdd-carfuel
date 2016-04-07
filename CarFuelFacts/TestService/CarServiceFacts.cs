@@ -23,9 +23,12 @@ namespace CarFuelFacts.TestService
     public class ShareCarService
     {
         public CarService carService { get; set; }
+        public FakeCarDB fakeDB { get; set; }
         public ShareCarService()
         {
-            this.carService = new CarService(new FakeCarDB());
+            this.fakeDB = new FakeCarDB();
+            this.carService = new CarService(fakeDB);
+            
         }
     }
 
@@ -42,9 +45,11 @@ namespace CarFuelFacts.TestService
         public class AddCarService
         {
             public CarService carService { get; set; }
+            public FakeCarDB fakeDb { get; set; }
 
             public AddCarService(ShareCarService shareService)
             {
+                this.fakeDb = shareService.fakeDB;
                 this.carService = shareService.carService;
             }
 
@@ -61,9 +66,12 @@ namespace CarFuelFacts.TestService
                 addedCar.ShouldNotBeNull();
                 Assert.Equal(car.Make, addedCar.Make);
                 Assert.Equal(car.Model, addedCar.Model);
-                var cars = carService.GetCars(userId);
-                Assert.Equal(1, cars.Count);
-                Assert.Contains(cars, _car => _car.OwnerId == userId);
+               
+                fakeDb.IsCalledAdd.ShouldBeTrue();//Mock Way test Adding
+
+                //var cars = carService.GetCars(userId);
+                //Assert.Equal(1, cars.Count);
+                //Assert.Contains(cars, _car => _car.OwnerId == userId);
             }
 
             [Fact]
