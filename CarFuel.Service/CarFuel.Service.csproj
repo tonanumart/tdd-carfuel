@@ -44,6 +44,7 @@
     <Compile Include="CarService.cs" />
     <Compile Include="CustomException\BussinessException.cs" />
     <Compile Include="CustomException\OverQuotaException.cs" />
+    <Compile Include="ICarService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
