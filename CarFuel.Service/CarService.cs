@@ -11,7 +11,7 @@ namespace CarFuel.Service
 {
     public class CarService : ICarService
     {
-        public ICarDb carDb { get; }
+        public ICarDb carDb { get; set; }
 
         public CarService(ICarDb CarDb)
         {
