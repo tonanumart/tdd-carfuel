@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using CarFuel.DAL;
 using CarFuel.Service.CustomException;
+using System.Net;
 
 namespace CarFuelWeb.Controllers
 {
@@ -35,8 +36,11 @@ namespace CarFuelWeb.Controllers
         }
 
 
-        public ActionResult Deatail(Guid id)
+        public ActionResult Deatail(Guid? id)
         {
+            if (!id.HasValue) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var userId = new Guid(User.Identity.GetUserId());
             var car = carService.GetCars(userId).SingleOrDefault(x => x.Id == id);
             return View(car);
