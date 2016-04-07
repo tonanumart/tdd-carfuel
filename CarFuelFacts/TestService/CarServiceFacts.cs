@@ -85,7 +85,7 @@ namespace CarFuelFacts.TestService
                 carService.carDb = mock.Object;
                 var car = new Car();
                 var addedCar = carService.AddNewCar(Guid.NewGuid(), car);
-                mock.Verify(db => db.Add(It.IsAny<Car>()), Times.Exactly(2));
+                mock.Verify(db => db.Add(It.IsAny<Car>()), Times.Exactly(5));
                 Assert.Equal(car.Make, addedCar.Make);
                 Assert.Equal(car.Model, addedCar.Model);
 
