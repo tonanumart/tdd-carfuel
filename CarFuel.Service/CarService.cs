@@ -9,15 +9,9 @@ using System.Threading.Tasks;
 
 namespace CarFuel.Service
 {
-    public class CarService
+    public class CarService : ICarService
     {
         public ICarDb carDb { get; }
-
-        public CarService()
-        {
-            if (carDb == null)
-                carDb = new FakeCarDB();
-        }
 
         public CarService(ICarDb CarDb)
         {

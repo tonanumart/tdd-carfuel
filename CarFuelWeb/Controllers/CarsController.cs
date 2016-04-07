@@ -16,12 +16,12 @@ namespace CarFuelWeb.Controllers
     public class CarsController : Controller
     {
 
-        private CarService carService { get; set; }
-        public CarsController()
+        private readonly ICarService carService;
+        
+        public CarsController(ICarService _carService)
         {
-            this.carService = new CarService(new CarDb());
+            this.carService = _carService;
         }
-        // GET: Cars
 
         public ActionResult Index()
         {
