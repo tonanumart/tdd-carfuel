@@ -34,7 +34,7 @@ namespace CarFuelFacts.TestService
     {
 
     }
-
+    
     public class CarServiceFacts
     {
         [Collection(nameof(ConstantTest.CarService))]
